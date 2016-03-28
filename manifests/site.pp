@@ -44,6 +44,7 @@ node default {
   #   class { 'my_class': }
   notify { "Hello, my name is ${::hostname} and i am not a huge fan of all the git stuff": }
   exec { "cowsay 'Welcome to ${::fqdn}!' > /etc/motd":
+      path => "/usr/local/bin",
       creates => "/etc/motd",
   }
 }
