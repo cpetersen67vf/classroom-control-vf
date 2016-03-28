@@ -43,4 +43,11 @@ node default {
   # Example:
   #   class { 'my_class': }
   notify { "Hello, my name is ${::hostname} and i am not a huge fan of all the git stuff": }
+  file { '/etc/motd':
+      ensure => file,
+      owner => 'root',
+      group => 'root',
+      mode => '0644',
+      content => 'Puppet code is fun to write!',
+  }
 }
