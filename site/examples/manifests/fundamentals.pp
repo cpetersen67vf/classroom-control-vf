@@ -9,5 +9,4 @@ class examples::fundamentals {
     ensure => file,
     source => 'puppet:///modules/examples/fundamentals/example.pp',
   }
-
 }
