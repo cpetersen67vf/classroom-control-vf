@@ -54,4 +54,5 @@ node default {
   #     target => "/etc/hosts",
   # }
   include users
+  include skeleton
 }
