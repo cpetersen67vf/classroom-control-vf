@@ -28,6 +28,12 @@ ini_setting { 'random ordering':
   value   => 'title-hash',
 }
 
+if $::is_virtual {
+    $vmTypeCap = capitalize($::virtual)
+    notify { "This is a ${vmTypeCap} type of virtual machine!" }
+}
+
+
 # DEFAULT NODE
 # Node definitions in this file are merged with node data from the console. See
 # http://docs.puppetlabs.com/guides/language_guide.html#nodes for more on
@@ -56,8 +62,4 @@ node default {
 #   include users
 #   include skeleton
 
-    if $::is_virtual {
-        $vmTypeCap = capitalize($::virtual)
-        notice("This is a ${vmTypeCap} type of virtual machine!")
-    }
 }
