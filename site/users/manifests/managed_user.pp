@@ -10,8 +10,8 @@ define users::managed_user ( home = "/home/${title}", group, shell = '/bin/bash'
     user { $name:
         ensure => present,
         gid => $group,
-        home = $home,
-        shell = $shell,
+        home => $home,
+        shell => $shell,
     }
     file { $home:
         ensure => directory,
