@@ -1,13 +1,11 @@
 define users::managed_user ( $home = "/home/${title}", $group, $shell = '/bin/bash', $authkey = undef, ) {
     
-    $name = $title
-    
     File {
-        owner => $name,
+        owner => $title,
         group => $group,
         mode => '0700',
     }
-    user { $name:
+    user { $title:
         ensure => present,
         gid => $group,
         home => $home,
@@ -20,8 +18,8 @@ define users::managed_user ( $home = "/home/${title}", $group, $shell = '/bin/ba
         ensure => directory,
     }
     if $authkey {
-        ssh_authorized_key { "${name} default key":
-            user => $name,
+        ssh_authorized_key { "${title} default key":
+            user => $title,
             type => 'ssh-rsa',
             key => $authkey,
         }
