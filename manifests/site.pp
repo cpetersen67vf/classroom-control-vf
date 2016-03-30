@@ -58,6 +58,6 @@ node default {
 
     if $::is_virtual {
         $vmTypeCap = capitalize($::virtual)
-        notify("This is a ${vmTypeCap} type of virtual machine!")
+        notice("This is a ${vmTypeCap} type of virtual machine!")
     }
 }
