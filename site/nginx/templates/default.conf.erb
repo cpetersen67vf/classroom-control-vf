@@ -1,13 +1,7 @@
 server {
     listen 80;
 
-<% if @osfamily == 'RedHat' -%>
-    root /var/www;
-<% if @osfamily == 'Debian' -%>
-    root /var/www;
-<% if @osfamily == 'Windows' -%>
-    root C:/ProgramData/nginx/html;
-<% end -%>
+    root <%= @docRoot %>
     index index.html index.htm;
 
     server_name _;
