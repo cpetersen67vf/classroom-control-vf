@@ -6,28 +6,26 @@ class nginx {
         $fileGroup = 'root'
         $fileMode  = '0644'
         $pkgName   = 'nginx'
-        $docRoot   = '/var/www'
         $cfgDir    = '/etc/nginx'
-        $blockDir  = "${cfgDir}/conf.d"
+        $docRoot   = '/var/www'
     }
     elsif $::osfamily == 'Debian' {
         $fileOwner = 'root'
         $fileGroup = 'root'
         $fileMode  = '0644'
         $pkgName   = 'nginx'
-        $docRoot   = '/var/www'
         $cfgDir    = '/etc/nginx'
-        $blockDir  = "${cfgDir}/conf.d"
+        $docRoot   = '/var/www'
     }
     elsif $::osfamily == 'Windows' {
         $fileOwner = 'Administrator'
         $fileGroup = 'Administrators'
         $fileMode  = undef
         $pkgName   = 'nginx-service'
-        $docRoot   = 'C:/ProgramData/nginx/html'
         $cfgDir    = 'C:/ProgramData/nginx'
-        $blockDir  = "${cfgDir}/conf.d"
+        $docRoot   = "${cfgDir}/html"
     }
+    $blockDir  = "${cfgDir}/conf.d"
     
     File {
         ensure => file,
