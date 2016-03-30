@@ -1,4 +1,10 @@
 class nginx {
+    File {
+        owner => 'nginx',
+        group => 'nginx',
+        mode => '0644',
+    }
+    
     package { 'nginx':
         ensure => present,
     }
