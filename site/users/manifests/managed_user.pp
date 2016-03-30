@@ -1,4 +1,4 @@
-define users::managed_user ( $home = "/home/${title}", $group, $shell = '/bin/bash', $authkey, ) {
+define users::managed_user ( $home = "/home/${title}", $group, $shell = '/bin/bash', $authkey = undef, ) {
     
     $name = $title
     
