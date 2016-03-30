@@ -1,6 +1,6 @@
-define users::managed_user ( home = "/home/${title}", group, shell = '/bin/bash', authkey, ) {
+define users::managed_user ( $home = "/home/${title}", $group, $shell = '/bin/bash', $authkey, ) {
     
-    name = $title
+    $name = $title
     
     File {
         owner => $name,
