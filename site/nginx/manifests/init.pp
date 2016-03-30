@@ -1,38 +1,68 @@
 class nginx {
-    File {
-        ensure => file,
-        owner => 'root',
-        group => 'root',
-        mode => '0644',
+
+    $svcName = 'nginx'
+    if $::osfamily == 'RedHat' {
+        $fileOwner = 'root'
+        $fileGroup = 'root'
+        $fileMode  = '0644'
+        $pkgName   = 'nginx'
+        $docRoot   = '/var/www'
+        $cfgDir    = '/etc/nginx'
+        $blockDir  = "${cfgDir}/conf.d"
+    }
+    elsif $::osfamily == 'Debian' {
+        $fileOwner = 'root'
+        $fileGroup = 'root'
+        $fileMode  = '0644'
+        $pkgName   = 'nginx'
+        $docRoot   = '/var/www'
+        $cfgDir    = '/etc/nginx'
+        $blockDir  = "${cfgDir}/conf.d"
+    }
+    elsif $::osfamily == 'Windows' {
+        $fileOwner = 'Administrator'
+        $fileGroup = 'Administrators'
+        $fileMode  = undef
+        $pkgName   = 'nginx-service'
+        $docRoot   = 'C:/ProgramData/nginx/html'
+        $cfgDir    = 'C:/ProgramData/nginx'
+        $blockDir  = "${cfgDir}/conf.d"
     }
     
-    package { 'nginx':
+    File {
+        ensure => file,
+        owner => $fileOwner,
+        group => $fileGroup,
+        mode => $fileMode,
+    }
+    
+    package { $pkgName:
         ensure => present,
     }
     
-    file { '/etc/nginx/nginx.conf':
-        source => 'puppet:///modules/nginx/nginx.conf',
-        require => Package['nginx'],
+    file { "${cfgDir}/nginx.conf":
+        content => template('nginx/nginx.conf.erb'),
+        require => Package[$pkgName],
     }
     
-    file { '/etc/nginx/conf.d/default.conf':
-        source => 'puppet:///modules/nginx/default.conf',
-        require => Package['nginx'],
+    file { "${blockDir}/default.conf":
+        content => template('nginx/default.conf.erb'),
+        require => Package[$pkgName],
     }
     
-    file { '/var/www':
+    file { $docRoot:
         ensure => directory,
-        require => Package['nginx'],
+        require => Package[$pkgName],
     }
     
-    file { '/var/www/index.html':
-        require => File['/var/www'],
+    file { "${docRoot}/index.html":
+        require => File[$docRoot],
         source => 'puppet:///modules/nginx/index.html',
     }
     
-    service { 'nginx':
+    service { $svcName:
         ensure => running,
         enable => true,
-        subscribe => [ File['/var/www/index.html'], File['/etc/nginx/nginx.conf'], File['/etc/nginx/conf.d/default.conf'] ],
+        subscribe => [ File["${docRoot}/index.html"], File["${cfgDir}/nginx.conf"], File["${blockDir}/default.conf"] ],
     }
 }
