@@ -1,3 +1,6 @@
 ---
-message: This message came from the common hiera datasource.
+
+message: "This message came from the common hiera datasource."
+
+nginx::docRoot: "/var/www4"
 
