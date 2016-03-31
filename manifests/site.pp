@@ -33,6 +33,8 @@ if $::is_virtual {
     notify { "This is a ${vmTypeCap} type of virtual machine!": }
 }
 
+$messageText = hiera("message")
+notify { "${messageText}": }
 
 # DEFAULT NODE
 # Node definitions in this file are merged with node data from the console. See
