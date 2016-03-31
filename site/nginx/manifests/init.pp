@@ -1,4 +1,4 @@
-class nginx ( $root ) {
+class nginx ( $root = undef ) {
 
     #  Service name is always the same for our examples.  If it can change, move it into the case.
     $svcName = 'nginx'
