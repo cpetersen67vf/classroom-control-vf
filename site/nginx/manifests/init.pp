@@ -1,4 +1,4 @@
-class nginx {
+class nginx ( $root ) {
 
     #  Service name is always the same for our examples.  If it can change, move it into the case.
     $svcName = 'nginx'
@@ -11,7 +11,7 @@ class nginx {
             $fileMode  = '0644'
             $pkgName   = 'nginx'
             $cfgDir    = '/etc/nginx'
-            $docRoot   = '/var/www'
+            $docRoot   = pick ($root, '/var/www')
         }
         'Debian' : {
             $fileOwner = 'root'
@@ -19,7 +19,7 @@ class nginx {
             $fileMode  = '0644'
             $pkgName   = 'nginx'
             $cfgDir    = '/etc/nginx'
-            $docRoot   = '/var/www'
+            $docRoot   = pick ($root, '/var/www')
         }
         'Windows' : {
             $fileOwner = 'Administrator'
@@ -27,7 +27,7 @@ class nginx {
             $fileMode  = undef
             $pkgName   = 'nginx-service'
             $cfgDir    = 'C:/ProgramData/nginx'
-            $docRoot   = "${cfgDir}/html"
+            $docRoot   = pick ($root, "${cfgDir}/html")
         }
         default : {
             fail { "Unsupported OS family \"${::osfamily}\" for nginx module.": }
